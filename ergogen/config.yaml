@@ -1,0 +1,216 @@
+units:
+  extra_spread: 0
+  extra_padding: 0 
+  board_expand: 2
+
+  # Physical measures
+  screw_radius: 1.1 # M2 screws
+  screw_diameter: screw_radius * 2
+  screw_head_radius: 2.05
+  screw_head_diameter: screw_head_radius * 2
+  spacer_radius: 2.15 # M2 standoffs
+  spacer_diameter: spacer_radius * 2
+  fillet_radius: 0.5
+points:
+  zones:
+    # Main key matrix
+    matrix:
+      key:
+        spread: u + extra_spread
+        padding: u + extra_padding
+        tags: 
+          - key
+      anchor:
+        shift: [100, -100] # Fix KiCad placement
+      columns:
+        c1.key.column_net: C1
+        c2.key.column_net: C2
+        c3.key.column_net: C3
+        c4.key.column_net: C4
+        c5.key.column_net: C5
+        c6.key.column_net: C6
+      rows:
+        r4.row_net: R4
+        r3.row_net: R3
+        r2.row_net: R2
+        r1.row_net: R1
+    screw_pcb_left_top:
+      key.tags:
+        - helper
+        - screw
+      anchor:
+        - ref: matrix_c1_r1
+          shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2]
+    screw_pcb_right_top:
+      key.tags:
+        - helper
+        - screw
+      anchor:
+        - ref: matrix_c6_r1
+          shift: [-(u + extra_spread) / 2, -(u + extra_padding) / 2]
+    screw_pcb_right_bottom:
+      key.tags:
+        - helper
+        - screw
+      anchor:
+        - ref: matrix_c6_r4
+          shift: [-(u + extra_spread) / 2, (u + extra_padding) / 2]
+    screw_pcb_left_bottom:
+      key.tags:
+        - helper
+        - screw
+      anchor:
+        - ref: matrix_c1_r4
+          shift: [(u + extra_spread) / 2, (u + extra_padding) / 2]
+    screw_pcb_center:
+      key.tags:
+        - helper
+        - screw
+      anchor:
+        - ref: matrix_c3_r2
+          shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2]
+outlines:
+  _keycaps:
+    - what: rectangle
+      where: [key]
+      size: 18
+      fillet: 1
+  _screws:
+    - what: circle
+      where: /screw_pcb/
+      radius: screw_radius
+  _screw_heads:
+    - what: circle
+      where: /screw_pcb/
+      radius: screw_head_radius
+  _spacers:
+    - what: circle
+      where: /screw_pcb/
+      radius: spacer_radius
+  _matrix_outline:
+    - what: polygon
+      points:
+        - ref: matrix_c1_r1
+          shift: [-u/2,u/2]
+        - ref: matrix_c6_r1
+          shift: [u/2,u/2]
+        - ref: matrix_c6_r4
+          shift: [u/2,-u/2]
+        - ref: matrix_c1_r4
+          shift: [-u/2,-u/2]
+  _board_outline:
+    - what: outline
+      name: _matrix_outline
+      expand: board_expand
+
+  preview:
+    - what: outline
+      name: _board_outline
+    - what: outline
+      name: _keycaps
+      operation: stack
+    - what: outline
+      name: _screws
+      operation: stack
+    - what: outline
+      name: _screw_heads
+      operation: stack
+pcbs:
+  main_board:
+    template: kicad8
+    outlines:
+      main:
+        outline: _board_outline
+    footprints:
+      m2_screws:
+        what: ceoloide/mounting_hole_npth
+        where: /screw/
+        params:
+          hole_size: screw_diameter
+          hole_drill: screw_diameter
+
+      key_switches:
+        what: ceoloide/switch_mx
+        where: /key/
+        params:
+          side: B
+          reversible: false
+          hotswap: true
+          include_silkscreen: false
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+
+      diodes:
+        what: ceoloide/diode_tht_sod123
+        where: /key/
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          include_tht: false
+          reversible: false
+          side: B
+        adjust:
+          shift: [7.5,-1]
+          rotate: 90
+
+      mcu:
+        what: ceoloide/mcu_nice_nano
+        where: matrix_c1_r1
+        params:
+          P21: C1
+          P20: C2
+          P19: C3
+          P18: C4
+          P15: C5
+          P14: C6
+          P5: R1
+          P6: R2
+          P7: R3
+          P8: R4
+          side: B
+        adjust:
+          rotate: 90
+          shift: [2, 1]
+      
+      on_off_switch:
+        what: ceoloide/power_switch_smd_side
+        where: matrix_c1_r2
+        params:
+          side: B
+          from: BAT_P
+          to: RAW
+        adjust:
+          shift: [-u,0]
+          rotate: 180
+      
+      reset_switch:
+        what: ceoloide/reset_switch_smd_side
+        where: matrix_c2_r1
+        params:
+          side: B
+          from: GND
+          to: RST
+          include_bosses: true
+        adjust:
+          shift: [0,u/2]
+      
+      battery_connector:  
+        what: ceoloide/battery_connector_jst_ph_2
+        where: matrix_c2_r1
+        params:
+          side: B
+          BAT_P: BAT_P
+          BAT_N: GND
+          include_courtyard: false
+        adjust:
+          shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2]
+          rotate: 90
+      
+      jlcpcb_order_number_text:
+        what: ceoloide/utility_text
+        where: matrix_c3_r4
+        params:
+          side: B
+          text: JLCJLCJLCJLC
+        adjust:
+          shift: [u/2, -5]
