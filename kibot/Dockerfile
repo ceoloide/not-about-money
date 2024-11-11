@@ -10,7 +10,7 @@ RUN     apt-get update  && \
 	wget http://www.repo.hu/projects/freerouting_cli/releases-jar/freerouting_cli-1.tar.gz && \
   tar xvf freerouting_cli-1.tar.gz && \
 	cp /freerouting_cli/lib/freerouting_cli.jar /opt/freerouting_cli.jar && \
-	wget https://github.com/freerouting/freerouting/releases/download/SNAPSHOT/freerouting-20241111_140100.jar && \
-	mv freerouting-20241111_140100.jar /opt/freerouting.jar && \
+	wget https://github.com/freerouting/freerouting/releases/download/SNAPSHOT/freerouting-SNAPSHOT-20241111_140100.jar && \
+	mv freerouting-SNAPSHOT-20241111_140100.jar /opt/freerouting.jar && \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* /var/cache/debconf/templates.dat-old /var/lib/dpkg/status-old
