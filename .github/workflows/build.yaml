@@ -42,7 +42,7 @@ jobs:
       - name: Run KiBot to generate images, gerbers for the unrouted board
         uses: ./.github/actions/kibot
         with:
-          boards: corney_island corney_island_wireless 
+          boards: not_about_money
           config: default
       - name: Export DSN file for Freerouting
         uses: ./.github/actions/export-dsn
