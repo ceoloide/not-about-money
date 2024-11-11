@@ -193,7 +193,7 @@ pcbs:
           to: RST
           include_bosses: true
         adjust:
-          shift: [(u + extra_spread) / 2,u/2 + board_expand - 2.25]
+          shift: [(u + extra_spread) / 2 + 4,u/2 + board_expand - 2.25]
       
       battery_connector:  
         what: ceoloide/battery_connector_jst_ph_2
