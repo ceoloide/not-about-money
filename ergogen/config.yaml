@@ -21,7 +21,7 @@ points:
         tags: 
           - key
       anchor:
-        shift: [50, -100] # Fix KiCad placement
+        shift: [100, -100] # Fix KiCad placement
       columns:
         c1.key.column_net: C1
         c2.key.column_net: C2
