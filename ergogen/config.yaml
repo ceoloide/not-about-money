@@ -103,6 +103,13 @@ outlines:
       name: _matrix_outline
       expand: board_expand
 
+  not_about_money_outline:
+    - what: outline
+      name: _board_outline
+    - what: outline
+      name: _screws
+      operation: stack
+
   preview:
     - what: outline
       name: _board_outline
