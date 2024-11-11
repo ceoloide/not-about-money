@@ -21,7 +21,7 @@ points:
         tags: 
           - key
       anchor:
-        shift: [100, -100] # Fix KiCad placement
+        shift: [50, -100] # Fix KiCad placement
       columns:
         c1.key.column_net: C1
         c2.key.column_net: C2
@@ -39,7 +39,7 @@ points:
         - helper
         - screw
       anchor:
-        - ref: matrix_c1_r1
+        - ref: matrix_c2_r1
           shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2]
     screw_pcb_right_top:
       key.tags:
@@ -137,6 +137,7 @@ pcbs:
           reversible: false
           hotswap: true
           include_silkscreen: false
+          include_corner_marks: false
           from: "{{column_net}}"
           to: "{{colrow}}"
 
@@ -150,7 +151,7 @@ pcbs:
           reversible: false
           side: B
         adjust:
-          shift: [7.5,-1]
+          shift: [7.1,1.25]
           rotate: 90
 
       mcu:
@@ -170,7 +171,7 @@ pcbs:
           side: B
         adjust:
           rotate: 90
-          shift: [2, 1]
+          shift: [u/2 -board_expand*2- 0.2, 1]
       
       on_off_switch:
         what: ceoloide/power_switch_smd_side
@@ -180,7 +181,7 @@ pcbs:
           from: BAT_P
           to: RAW
         adjust:
-          shift: [-u,0]
+          shift: [-u/2 -board_expand + 1.8, -(u + extra_padding) / 2]
           rotate: 180
       
       reset_switch:
@@ -192,18 +193,18 @@ pcbs:
           to: RST
           include_bosses: true
         adjust:
-          shift: [0,u/2]
+          shift: [(u + extra_spread) / 2,u/2 + board_expand - 2.25]
       
       battery_connector:  
         what: ceoloide/battery_connector_jst_ph_2
-        where: matrix_c2_r1
+        where: matrix_c1_r2
         params:
           side: B
           BAT_P: BAT_P
           BAT_N: GND
           include_courtyard: false
         adjust:
-          shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2]
+          shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2 + 1]
           rotate: 90
       
       jlcpcb_order_number_text:
@@ -211,6 +212,17 @@ pcbs:
         where: matrix_c3_r4
         params:
           side: B
+          mirrored: true
           text: JLCJLCJLCJLC
         adjust:
           shift: [u/2, -5]
+      
+      board_version_text:
+        what: ceoloide/utility_text
+        where: matrix_c3_r2
+        params:
+          side: B
+          mirrored: true
+          text: "'Not about money' v0.1 by ceoloide"
+        adjust:
+          shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2 + 4]
