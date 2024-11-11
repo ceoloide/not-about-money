@@ -5,7 +5,7 @@ container_cmd=docker
 container_args="-w /board -v $(pwd):/board --rm"
 
 # Define the boards to autoroute and export, and the plates
-boards="not about money"
+boards="not_about_money"
 plates=""
 
 # Define the KiCad Auto Docker image to use
