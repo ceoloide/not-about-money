@@ -171,11 +171,24 @@ pcbs:
           P18: C4
           P15: C5
           P14: C6
-          P5: R1
-          P6: R2
+          P16: R1
+          P10: R2
           P7: R3
           P8: R4
+          P1_label: ' '
+          P0_label: ' '
+          P2_label: ' '
+          P3_label: ' '
+          P4_label: ' '
+          P5_label: ' '
+          P6_label: ' '
+          P9_label: ' '
+          RAW_label: "B+"
+          GND_label: "GN"
+          RST_label: "RS"
+          VCC_label: "V+"
           side: B
+          show_silk_labels_on_both_sides: false
         adjust:
           rotate: 90
           shift: [u/2 -board_expand*2- 0.2, 1]
