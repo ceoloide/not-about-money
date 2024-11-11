@@ -116,7 +116,7 @@ outlines:
       name: _screw_heads
       operation: stack
 pcbs:
-  main_board:
+  not_about_money:
     template: kicad8
     outlines:
       main:
