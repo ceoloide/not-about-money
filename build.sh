@@ -27,6 +27,7 @@ rm -rf outlines
 rm -rf pcbs
 rm -rf points
 rm -rf source
+rm -rf cases
 
 # Cleanup Freerouting log outpus
 if [ -e freerouting/freerouting.log ]; then

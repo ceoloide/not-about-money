@@ -1,7 +1,7 @@
 {
     "scripts": {
-        "build": "ergogen ./ergogen/ --output ./ --clear",
-        "debug": "ergogen ./ergogen/ --output ./ --clear",
+        "build": "ergogen ./ergogen/ --output ./ --clear && npx @jscad/cli cases/bottom_tray.jscad -of stla -o cases/bottom_tray.stl",
+        "debug": "ergogen ./ergogen/ --output ./ --clear && npx @jscad/cli cases/bottom_tray.jscad -of stla -o cases/bottom_tray.stl",
         "watch:build": "nodemon -e yaml,js -x \"npm run build\"",
         "watch:debug": "nodemon -e yaml,js -x \"npm run debug\""
     },

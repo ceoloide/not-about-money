@@ -11,6 +11,13 @@ units:
   spacer_radius: 2.15 # M2 standoffs
   spacer_diameter: spacer_radius * 2
   fillet_radius: 0.5
+
+  # Case variables
+  case_wall_thickness: 1.2
+  pcb_to_case_wall_tolerance: 0.25
+  bottom_plate_thickness: 1.0
+  top_plate_thickness: 1.6
+  internal_distance_between_plates: 4
 points:
   zones:
     # Main key matrix
@@ -109,6 +116,30 @@ outlines:
     - what: outline
       name: _screws
       operation: stack
+  _bottom_case_superlight_inner_outline:
+    - what: outline
+      name: _board_outline
+      expand:  -2 * case_wall_thickness
+      fillet: 0.5
+      joints: 1
+  _bottom_case_outer_outline:
+    - what: outline
+      name: _board_outline
+      expand: case_wall_thickness + pcb_to_case_wall_tolerance
+      fillet: 0.5
+      joints: 1
+  _bottom_case_inner_outline:
+    - what: outline
+      name: _board_outline
+      expand: pcb_to_case_wall_tolerance
+      fillet: 0.5
+      joints: 1
+  _bottom_case_walls:
+    - what: outline
+      name: _bottom_case_outer_outline
+    - what: outline
+      name: _bottom_case_inner_outline
+      operation: subtract
 
   preview:
     - what: outline
@@ -121,6 +152,12 @@ outlines:
       operation: stack
     - what: outline
       name: _screw_heads
+      operation: stack
+    - what: outline
+      name: _bottom_case_walls
+      operation: stack
+    - what: outline
+      name: _bottom_case_outer_outline
       operation: stack
 pcbs:
   not_about_money:
@@ -246,3 +283,18 @@ pcbs:
           text: "'Not about money' v0.1 by ceoloide"
         adjust:
           shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2 + 4]
+cases:
+  bottom_tray:
+    - what: outline
+      name: _bottom_case_walls
+      extrude: bottom_plate_thickness + internal_distance_between_plates + top_plate_thickness
+      shift: [-75,0,0]
+    - what: outline
+      name: _bottom_case_outer_outline
+      extrude: bottom_plate_thickness
+      shift: [-75,0,0]
+    - what: outline
+      name: _screws
+      extrude: bottom_plate_thickness
+      shift: [-75,0,0]
+      operation: subtract
