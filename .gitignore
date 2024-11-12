@@ -1,9 +1,6 @@
 # For PCBs designed using KiCad: https://www.kicad.org/
 # Format documentation: https://kicad.org/help/file-formats/
 
-#MacOS
-.DS_Store
-
 # Kibot
 kibot_errors.filter
 *-drc.txt
@@ -48,15 +45,15 @@ logs
 .DS_Store
 
 # ergogen
-ergogen/output/outlines/_*.*
-ergogen/output/pcbs/_*.*
-ergogen/output/outlines/*.yaml
-ergogen/output/points
-ergogen/output/source
+outlines/_*.*
+outlines/*.yaml
+pcbs/_*.*
+points
+source
 
 # npm
 node_modules
 
 # gerbers
-ergogen/output/gerbers/*/*
-!ergogen/output/gerbers/*/*.zip
+gerbers/*/*
+!gerbers/*/*.zip
