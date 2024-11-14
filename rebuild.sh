@@ -7,7 +7,7 @@ container_args="-w /board -v $(pwd):/board --rm"
 # Define the boards to autoroute and export, and the plates
 boards="not_about_money"
 kicad_auto_image="ghcr.io/inti-cmnb/kicad8_auto:latest"
-freerouting_cli_image="ceoloide/ergogen:2.0.1"
+freerouting_cli_image="ceoloide/ergogen-freerouting:latest"
 
 # Cleanup Freerouting log outpus
 if [ -e freerouting/freerouting.log ]; then
