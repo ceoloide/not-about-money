@@ -82,6 +82,10 @@ outlines:
       where: [key]
       size: 18
       fillet: 1
+  _switches:
+    - what: rectangle
+      where: [key]
+      size: 14
   _screws:
     - what: circle
       where: /screw_pcb/
@@ -116,6 +120,32 @@ outlines:
     - what: outline
       name: _screws
       operation: stack
+
+  _top_case_outer_outline:
+    - what: outline
+      name: _board_outline
+      expand: case_wall_thickness + pcb_to_case_wall_tolerance
+      fillet: 0.5
+      joints: 1
+  _top_case_inner_outline:
+    - what: outline
+      name: _board_outline
+      expand: pcb_to_case_wall_tolerance
+      fillet: 0.5
+      joints: 1
+  top_case_inner_plate:
+    - what: outline
+      name: _top_case_inner_outline
+    - what: outline
+      name: _switches
+      operation: subtract
+  _top_case_walls:
+    - what: outline
+      name: _top_case_outer_outline
+    - what: outline
+      name: _top_case_inner_outline
+      operation: subtract
+  
   _bottom_case_superlight_inner_outline:
     - what: outline
       name: _board_outline
@@ -151,13 +181,16 @@ outlines:
       name: _screws
       operation: stack
     - what: outline
+      name: _switches
+      operation: stack
+    - what: outline
       name: _screw_heads
       operation: stack
     - what: outline
-      name: _bottom_case_walls
+      name: _top_case_walls
       operation: stack
     - what: outline
-      name: _bottom_case_outer_outline
+      name: _top_case_outer_outline
       operation: stack
 pcbs:
   not_about_money:
@@ -284,17 +317,12 @@ pcbs:
         adjust:
           shift: [(u + extra_spread) / 2, -(u + extra_padding) / 2 + 4]
 cases:
-  bottom_tray:
+  case_top:
     - what: outline
-      name: _bottom_case_walls
-      extrude: bottom_plate_thickness + internal_distance_between_plates + top_plate_thickness
-      shift: [-75,0,0]
+      name: _top_case_walls
+      extrude: (bottom_plate_thickness + internal_distance_between_plates + top_plate_thickness) * -1
+      shift: [0,0,0]
     - what: outline
-      name: _bottom_case_outer_outline
-      extrude: bottom_plate_thickness
-      shift: [-75,0,0]
-    - what: outline
-      name: _screws
-      extrude: bottom_plate_thickness
-      shift: [-75,0,0]
-      operation: subtract
+      name: top_case_inner_plate
+      extrude: top_plate_thickness * -1
+      shift: [0,0,0]
