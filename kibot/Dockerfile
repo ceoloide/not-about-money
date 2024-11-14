@@ -7,7 +7,7 @@ RUN     apt-get update  && \
 	npm install -g https://github.com/ergogen/ergogen#develop && \
   wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb && \
   dpkg -i jdk-21_linux-x64_bin.deb && \
-	wget https://github.com/freerouting/freerouting/releases/download/2.0.1/freerouting-2.0.1.jar && \
+	wget https://github.com/freerouting/freerouting/releases/download/v2.0.1/freerouting-2.0.1.jar && \
 	mv freerouting-2.0.1.jar /opt/freerouting.jar && \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/* /var/cache/debconf/templates.dat-old /var/lib/dpkg/status-old
