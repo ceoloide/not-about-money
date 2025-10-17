@@ -1,5 +1,6 @@
 {
     "scripts": {
+        "postinstall": "git submodule update --init --recursive --remote",
         "build": "ergogen ./ergogen/ --output ./ --clear && npx @jscad/cli cases/case_top.jscad -of stla -o cases/case_top.stl",
         "debug": "ergogen ./ergogen/ --output ./ --clear --debug && npx @jscad/cli cases/case_top.jscad -of stla -o cases/case_top.stl",
         "watch:build": "nodemon -e yaml,js -x \"npm run build\"",
